@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.joice</groupId>
-	<artifactId>joice</artifactId>
+	<groupId>com.murong</groupId>
+	<artifactId>prepayment</artifactId>
 	<version>0.0.1</version>
 	<packaging>pom</packaging>
-	<name>joice</name>
+	<name>prepayment</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -37,11 +37,11 @@
 	</properties>
 
 	<modules>
-		<module>joice-common</module>
-		<module>joice-facade</module>
-		<module>joice-service</module>
-		<module>joice-web</module>
-		<module>joice-cache</module>
+		<module>prepayment-common</module>
+		<module>prepayment-facade</module>
+		<module>prepayment-service</module>
+		<module>prepayment-web</module>
+		<module>prepayment-cache</module>
 	</modules>
 
 	<dependencyManagement>
@@ -267,7 +267,7 @@
 					<artifactId>tomcat7-maven-plugin</artifactId>
 					<version>2.1</version>
 					<configuration>
-						<path>/joice</path>
+						<path>/prepayment</path>
 						<port>8080</port>
 					</configuration>
 				</plugin>

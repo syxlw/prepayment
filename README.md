@@ -1,10 +1,10 @@
-# Joice
+# prepayment
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 
 # 目录
 - [目录](#目录)
-- [一. joice项目简介](#一-joice项目简介)
+- [一. prepayment项目简介](#一-prepayment项目简介)
 - [二. 主要功能](#二-主要功能)
     - [1.数据库](#1数据库)
     - [2.持久层](#2持久层)
@@ -25,8 +25,8 @@
 - [三. 启动](#三-启动)
 
 
-# 一. joice项目简介
-+ joice是使用Spring框架开发的分布式系统架构。
+# 一. prepayment项目简介
++ prepayment是使用Spring框架开发的分布式预付费卡系统架构。
 + 使用Maven对项目进行模块化管理，提高项目的易开发性、扩展性。
 + 公共功能：AOP、缓存、基类、公共配置、工具类等。
 + 系统功能：权限控制、调度管理、分布式事务、RPC。
@@ -36,12 +36,12 @@
 ## 1.数据库
 Druid数据库连接池，监控数据库访问性能，统计SQL执行性能，数据库密码加密。
 
-+ 数据库密码加密和解密用到了`com.alibaba.druid.filter.config.ConfigTools`，再定一个类扩展`com.alibaba.druid.pool.DruidDataSource`即可，具体代码实现在`org.joice.service.datasource.DecryptDruidDataSource`    
++ 数据库密码加密和解密用到了`com.alibaba.druid.filter.config.ConfigTools`，再定一个类扩展`com.alibaba.druid.pool.DruidDataSource`即可，具体代码实现在`DecryptDruidDataSource`    
 
 ## 2.持久层
 MyBatis持久化；AOP切换数据库实现读写分离。
 
-+ 读写分离实际上是动态切换数据库。扩展`org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource`，在每次数据库调用前确定数据源。具体代码实现在`org.joice.service.aspect.ChooseDataSource`    
++ 读写分离实际上是动态切换数据库。扩展`org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource`，在每次数据库调用前确定数据源。具体代码实现在`ChooseDataSource`    
     
 ## 3.MVC
 基于Spring MVC注解，REST风格Controller。Exception统一管理。    
@@ -51,7 +51,7 @@ Spring + Quartz，可以查询、修改周期、暂停、删除、新增、立�
 
 + [Quartz知识点总结](https://github.com/huhuics/Accumulate/blob/master/%E6%9E%B6%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/Quartz%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.md)
 
-+ 具体实现在`org.joice.service.support.scheduler.SchedulerManager`
++ 具体实现在`SchedulerManager`
      
 ## 5.基于Session的国际化提示信息，责任链模式的本地语言拦截器
 *未完*
@@ -116,9 +116,9 @@ RocketMQ把消息的发送分成了2个阶段：**Prepare阶段** 和 **确认�
 
 如果前两步成功了，最后一步失败，怎么办？RocketMQ会定期扫描所有Prepared消息，询问发送方消息是确认发出去还是取消发送？（RocketMQ 3.2版本以后取消了消息回查功能）
 
-在**joice**中，开了一个数据最终一致性的例子：
+在**prepayment**中，开了一个数据最终一致性的例子：
 
-用户下单购买商品（http://localhost:8089/joice-web/order/toOrder）， 系统需要完成两件事：扣减用户账户余额和创建订单。这两个动作显然要是原子的。**joice-web**完成扣减用户余额，**joice-service**完成创建订单。joice-web是消息的发送者，joice-service是消息的消费者。示意图如下：
+用户下单购买商品（http://localhost:8089/prepayment-web/order/toOrder）， 系统需要完成两件事：扣减用户账户余额和创建订单。这两个动作显然要是原子的。**prepayment-web**完成扣减用户余额，**prepayment-service**完成创建订单。prepayment-web是消息的发送者，prepayment-service是消息的消费者。示意图如下：
 
 ![](https://github.com/huhuics/Accumulate/blob/master/image/%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81%E5%92%8C%E6%B6%88%E8%B4%B9.png)
 
@@ -126,11 +126,11 @@ RocketMQ把消息的发送分成了2个阶段：**Prepare阶段** 和 **确认�
 logback打印日志，同时基于时间和文件大小分割日志文件。    
 
 ## 10.缓存
-+ 本地缓存：基于`ConcurrentHashMap`实现，实现类在[MapCache](https://github.com/huhuics/joice/blob/master/joice-cache/src/main/java/org/joice/cache/map/MapCache.java)。[MapCacheDaemon](https://github.com/huhuics/joice/blob/master/joice-cache/src/main/java/org/joice/cache/map/MapCacheDaemon.java)是一个守护线程，支持对Map的缓存持久化、缓存失效策略等等，使用方式可参考 [MapCache测试用例](https://github.com/huhuics/joice/blob/master/joice-cache/src/test/java/org/joice/cache/test/MapCacheTest.java)
++ 本地缓存：基于`ConcurrentHashMap`实现，实现类在[MapCache](https://github.com/huhuics/prepayment/blob/master/prepayment-cache/src/main/java/org/prepayment/cache/map/MapCache.java)。[MapCacheDaemon](https://github.com/huhuics/prepayment/blob/master/prepayment-cache/src/main/java/org/prepayment/cache/map/MapCacheDaemon.java)是一个守护线程，支持对Map的缓存持久化、缓存失效策略等等，使用方式可参考 [MapCache测试用例](https://github.com/huhuics/prepayment/blob/master/prepayment-cache/src/test/java/org/prepayment/cache/test/MapCacheTest.java)
 
-+ Redis缓存：基于`ShardedJedis`实现，实现类在[ShardedJedisCache](https://github.com/huhuics/joice/blob/master/joice-cache/src/main/java/org/joice/cache/redis/ShardedJedisCache.java)
++ Redis缓存：基于`ShardedJedis`实现，实现类在[ShardedJedisCache](https://github.com/huhuics/prepayment/blob/master/prepayment-cache/src/main/java/org/prepayment/cache/redis/ShardedJedisCache.java)
 
-开发这个缓存中间件的初衷是为了减少缓存操作的代码与业务逻辑解耦，借鉴`Spring Cache`的思想使用`AOP + Annotation`等技术实现缓存与业务逻辑的解耦，在需要对查询结果进行缓存的地方，使用`org.joice.cache.annotation.Cacheable`标记。
+开发这个缓存中间件的初衷是为了减少缓存操作的代码与业务逻辑解耦，借鉴`Spring Cache`的思想使用`AOP + Annotation`等技术实现缓存与业务逻辑的解耦，在需要对查询结果进行缓存的地方，使用`Cacheable`标记。
 
 ### 10.1 数据放入缓存
 ```java
@@ -150,11 +150,11 @@ logback打印日志，同时基于时间和文件大小分割日志文件。   
     }
 ```    
 
-+ 如果不自定义key，则该缓存使用自动生成的key。生成的规则是将类名、方法名、参数值一起计算其hashcode，这也意味着如果使用默认生成的key将不支持删除。 **注意：** 如果是使用自动生成key，切点处的方法参数如果不是基本类型而是对象，则该对象必须继承`org.joice.cache.to.BaseTO`，这样只要参数值每次一致，生成的hashcode就是相同的。
++ 如果不自定义key，则该缓存使用自动生成的key。生成的规则是将类名、方法名、参数值一起计算其hashcode，这也意味着如果使用默认生成的key将不支持删除。 **注意：** 如果是使用自动生成key，切点处的方法参数如果不是基本类型而是对象，则该对象必须继承`BaseTO`，这样只要参数值每次一致，生成的hashcode就是相同的。
 
 + 此外，key支持Spring EL表达式，condition也支持。
 
-+ 为了尽量减少内存使用和对网络带宽的压力，`joice-cache`实现了基于`Hessian`的序列化工具，开发者也可以通过实现`org.joice.cache.serializer.Serializer<T>`接口自行扩展    
++ 为了尽量减少内存使用和对网络带宽的压力，`prepayment-cache`实现了基于`Hessian`的序列化工具，开发者也可以通过实现`Serializer<T>`接口自行扩展    
 
 ### 10.2 修改缓存
 ```java
@@ -204,9 +204,9 @@ public String get(key) {
 ````
 
 # 三. 启动
-先在MySQL中导入`joice.sql`文件，然后再在`joice-service`的`resources`-->`config`修改成你自己的配置文件。    
+先在MySQL中导入`prepayment.sql`文件，然后再在`prepayment-service`的`resources`-->`config`修改成你自己的配置文件。    
 本项目需要依赖`Zookeeper`,`ActiveMQ`    
 
-> [joice-service] --> Run as --> Maven build... --> tomcat7:run
+> [prepayment-service] --> Run as --> Maven build... --> tomcat7:run
 
 ### _代码在逐步完善中_
