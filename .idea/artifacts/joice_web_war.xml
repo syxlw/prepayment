@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="joice-web:war">
+    <output-path>$PROJECT_DIR$/joice-web/target</output-path>
+    <root id="archive" name="joice-web.war">
+      <element id="artifact" artifact-name="joice-web:war exploded" />
+    </root>
+  </artifact>
+</component>

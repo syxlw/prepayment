@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/joice-cache" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/joice-common" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/joice-facade" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/joice-service" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/joice-web" vcs="svn" />
+  </component>
+</project>

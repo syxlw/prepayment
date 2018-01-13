@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/prepayment.iml" filepath="$PROJECT_DIR$/prepayment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/prepayment-cache/joice-cache.iml" filepath="$PROJECT_DIR$/prepayment-cache/joice-cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/prepayment-common/joice-common.iml" filepath="$PROJECT_DIR$/prepayment-common/joice-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/prepayment-facade/joice-facade.iml" filepath="$PROJECT_DIR$/prepayment-facade/joice-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/prepayment-service/joice-service.iml" filepath="$PROJECT_DIR$/prepayment-service/joice-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/prepayment-web/joice-web.iml" filepath="$PROJECT_DIR$/prepayment-web/joice-web.iml" />
+    </modules>
+  </component>
+</project>
